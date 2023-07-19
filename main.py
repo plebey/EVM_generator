@@ -1,3 +1,5 @@
+import sys
+
 from web3.auto import w3
 
 
@@ -7,6 +9,8 @@ def wallets_creation(num):
     except:
         print("Input digit.")
         main()
+        sys.exit()
+
     addresses =[]
     private_keys = []
     mnemonics = []
