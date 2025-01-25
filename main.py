@@ -1,33 +1,26 @@
 import sys
-
+from config import num_words
 from web3.auto import w3
 
 
 def wallets_creation(num):
-    try:
-        num = int(num)
-    except:
-        print("Input digit.")
-        main()
-        sys.exit()
-
-    addresses =[]
+    addresses = []
     private_keys = []
     mnemonics = []
     w3.eth.account.enable_unaudited_hdwallet_features()
     for i in range(num):
-        new_account = w3.eth.account.create_with_mnemonic()
+        new_account = w3.eth.account.create_with_mnemonic(num_words=num_words)
         addresses.append(new_account[0].address)
         private_keys.append(new_account[0]._private_key.hex())
         mnemonics.append(new_account[1])
 
-        print("Новый адрес кошелька:", addresses[-1])
+        print("New address:", addresses[-1])
 
     return addresses, private_keys, mnemonics
 
 
 def main():
-    w_number = input("How many wallets create? ")
+    w_number = int(input("How many wallets create? "))
     addresses, private_keys, mnemonics = wallets_creation(w_number)
 
     with open("wallet.txt", "w") as f:
